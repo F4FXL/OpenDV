@@ -25,11 +25,11 @@
 #include <wx/filename.h>
  
 /* wxHTTP randomly crashes when called on a worker thread, this must be called from main thread ! */
-wxString CXLXHostsFileDownloader::Download(const wxString & xlxHostsFileURL)
+wxString CXLXHostsFileDownloader::Download()
 {
 #ifdef XLX_USE_WGET
 	wxString xlxHostsFileName = wxFileName::CreateTempFileName(_T("XLX_Hosts_"));
-	wxString commandLine = _T("wget -q -O ") + xlxHostsFileName + _T(" ") + xlxHostsFileURL;
+	wxString commandLine = _T("wget -q -O ") + xlxHostsFileName + _T(" ") + XLX_HOST_FILE_URL;
 	bool execResult = wxShell(commandLine);
 	
 	if(!execResult) {
@@ -46,7 +46,7 @@ wxString CXLXHostsFileDownloader::Download(const wxString & xlxHostsFileURL)
 	http.SetHeader( _T("User-Agent"), _T("ircddbGateway") );
 	http.SetTimeout(5); // seconds
 
-	wxLogMessage(_T("Downloading XLX reflector list from %s"), xlxHostsFileURL.c_str());
+	wxLogMessage(_T("Downloading XLX reflector list from %s"), XLX_HOST_FILE_URL.c_str());
 
 	// remove "http://" from the url, i.e. minus 7 chars
 	size_t len = xlxHostsFileURL.length();

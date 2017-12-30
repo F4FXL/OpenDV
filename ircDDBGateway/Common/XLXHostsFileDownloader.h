@@ -21,10 +21,13 @@
 #define XLXHostsFileDownloader_H
 #define XLX_USE_WGET
 #include <wx/wx.h>
+//we use the XLXDMRMaster list because it starts with XLX instead of DCS, XRF etc ....
+const wxString XLX_HOST_FILE_URL = _T("http://xlxapi.rlx.lu/api.php?do=GetXLXDMRMaster");
+
 
 class CXLXHostsFileDownloader {
 public:
-	static wxString Download(const wxString & xlxHostsFileURL);
+	static wxString Download();
 };
 
 #endif

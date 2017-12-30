@@ -910,7 +910,7 @@ void CIRCDDBGatewayApp::createThread()
 	thread->setDExtra(dextraEnabled, dextraMaxDongles);
 	thread->setDCS(dcsEnabled);
 	thread->setCCS(ccsEnabled, ccsHost);
-	thread->setXLX(xlxEnabled, xlxOverrideLocal, xlxEnabled ? CXLXHostsFileDownloader::Download(xlxHostsFileUrl) : wxString(wxEmptyString));
+	thread->setXLX(xlxEnabled, xlxOverrideLocal, xlxEnabled ? CXLXHostsFileDownloader::Download() : wxString(wxEmptyString));
 	thread->setInfoEnabled(infoEnabled);
 	thread->setEchoEnabled(echoEnabled);
 	thread->setDTMFEnabled(dtmfEnabled);
