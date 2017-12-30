@@ -58,7 +58,7 @@ public:
 	virtual void setDExtra(bool enabled, unsigned int maxDongles);
 	virtual void setDPlus(bool enabled, unsigned int maxDongles, const wxString& login);
 	virtual void setDCS(bool enabled);
-	virtual void setXLX(bool enabled, bool overrideLocal, const wxString& fileName);
+	virtual void setXLX(bool enabled, const wxString xlxHostsFileName);
 	virtual void setCCS(bool enabled, const wxString& host);
 	virtual void setLog(bool enabled);
 	virtual void setAPRSWriter(CAPRSWriter* writer);
@@ -102,9 +102,8 @@ private:
 	unsigned int              m_dplusMaxDongles;
 	wxString                  m_dplusLogin;
 	bool                      m_dcsEnabled;
-	bool			  m_xlxEnabled;
-	bool			  m_xlxOverrideLocal;
-	wxString		  m_xlxHostsFileName;
+	bool         			  m_xlxEnabled;
+	wxString                  m_xlxHostsFileName;
 	bool                      m_ccsEnabled;
 	wxString                  m_ccsHost;
 	bool                      m_infoEnabled;

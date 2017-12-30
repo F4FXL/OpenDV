@@ -34,12 +34,10 @@ BEGIN_EVENT_TABLE(CXLXSet, wxPanel)
 END_EVENT_TABLE()
 
 
-CXLXSet::CXLXSet(wxWindow* parent, int id, const wxString& title, bool xlxEnabled, bool xlxOverrideLocal, const wxString& xlxHostsFileUrl) :
+CXLXSet::CXLXSet(wxWindow* parent, int id, const wxString& title, bool xlxEnabled) :
 wxPanel(parent, id),
 m_title(title),
-m_xlxEnabled(NULL),
-m_xlxOverrideLocal(NULL),
-m_xlxHostsFileUrl(NULL)
+m_xlxEnabled(NULL)
 {
 	wxFlexGridSizer* sizer = new wxFlexGridSizer(2);
 
@@ -51,27 +49,6 @@ m_xlxHostsFileUrl(NULL)
 	m_xlxEnabled->Append(_("Enabled"));
 	sizer->Add(m_xlxEnabled, 0, wxALL | wxALIGN_LEFT, BORDER_SIZE);
 	m_xlxEnabled->SetSelection(xlxEnabled ? 1 : 0);
-	
-	wxStaticText* xlxOverrideLocalLabel = new wxStaticText(this, -1, _("Override local hosts files"));
-	sizer->Add(xlxOverrideLocalLabel, 0, wxALL | wxALIGN_RIGHT, BORDER_SIZE);
-	
-	m_xlxOverrideLocal = new wxChoice(this, CHOICE_ENABLED, wxDefaultPosition, wxSize(CONTROL_WIDTH, -1));
-	m_xlxOverrideLocal->Append(_("No"));
-	m_xlxOverrideLocal->Append(_("Yes"));
-	sizer->Add(m_xlxOverrideLocal, 0, wxALL | wxALIGN_LEFT, BORDER_SIZE);
-	m_xlxOverrideLocal->SetSelection(xlxOverrideLocal ? 1 : 0);
-
-	wxStaticText* xlxHostsFileUrlLabel = new wxStaticText(this, -1, _("Hosts file URL"));
-	sizer->Add(xlxHostsFileUrlLabel, 0, wxALL | wxALIGN_RIGHT, BORDER_SIZE);
-
-	m_xlxHostsFileUrl  = new wxTextCtrl(this, -1, xlxHostsFileUrl, wxDefaultPosition, wxSize(CONTROL_WIDTH, -1));
-	sizer->Add(m_xlxHostsFileUrl, 0, wxALL | wxALIGN_LEFT, BORDER_SIZE);
-
-
-	if (xlxEnabled)
-		m_xlxHostsFileUrl->Enable();
-	else
-		m_xlxHostsFileUrl->Disable();
 
 	SetAutoLayout(true);
 
@@ -89,26 +66,7 @@ bool CXLXSet::Validate()
 	if (n == wxNOT_FOUND)
 		return false;
 		
-	n = m_xlxOverrideLocal->GetCurrentSelection();
-	if (n == wxNOT_FOUND)
-		return false;
-
-	// TODO F4FXL try to figure out why below symbols are not found under ubuntu
-	/*wxString value = m_xlxHostsFileUrl->GetValue();
-	wxURL url(value);
-	if (url.GetError() != wxURL_NOERR)
-		return false;*/
-
 	return true;
-}
-
-bool CXLXSet::getXLXOverrideLocal() const
-{
-	int c = m_xlxEnabled->GetCurrentSelection();
-	if (c == wxNOT_FOUND)
-		return false;
-
-	return c == 1;
 }
 
 bool CXLXSet::getXLXEnabled() const
@@ -120,24 +78,7 @@ bool CXLXSet::getXLXEnabled() const
 	return c == 1;
 }
 
-wxString CXLXSet::getXLXHostsFileUrl() const
-{
-	wxString value = m_xlxHostsFileUrl->GetValue();
-	
-	
-	// TODO F4FXL try to figure out why below symbols are not found under ubuntu
-	//wxURL url(value);
-	//if (url.GetError() == wxURL_NOERR)
-	//	return value;
-		
-	return wxEmptyString;
-}
-
 void CXLXSet::onEnabled(wxCommandEvent &event)
 {
-	int n = m_xlxEnabled->GetCurrentSelection();
-	if (n != 1)
-		m_xlxHostsFileUrl->Disable();
-	else
-		m_xlxHostsFileUrl->Enable();
+
 }

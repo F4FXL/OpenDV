@@ -23,22 +23,18 @@
 
 class CXLXSet : public wxPanel {
 public:
-	CXLXSet(wxWindow* parent, int id, const wxString& title, bool xlxEnabled, bool xlxOverrideLocal, const wxString& xlxHostsFileUrl);
+	CXLXSet(wxWindow* parent, int id, const wxString& title, bool xlxEnabled);
 	virtual ~CXLXSet();
 
 	virtual bool Validate();
 
-	virtual bool     getXLXEnabled() const;
-	virtual bool     getXLXOverrideLocal() const;
-	virtual wxString getXLXHostsFileUrl() const;
+	virtual bool getXLXEnabled() const;
 
 	virtual void onEnabled(wxCommandEvent& event);
 
 private:
 	wxString  m_title;
 	wxChoice* m_xlxEnabled;
-	wxChoice* m_xlxOverrideLocal;
-	wxTextCtrl* m_xlxHostsFileUrl;
 
 	DECLARE_EVENT_TABLE()
 };

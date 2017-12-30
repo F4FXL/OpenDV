@@ -83,7 +83,7 @@ m_dplusMaxDongles(0U),
 m_dplusLogin(),
 m_dcsEnabled(true),
 m_xlxEnabled(true),
-m_xlxHostsFileName(),
+m_xlxHostsFileName(_T("")),
 m_ccsEnabled(true),
 m_ccsHost(),
 m_infoEnabled(true),
@@ -576,11 +576,10 @@ void CIRCDDBGatewayThread::setDCS(bool enabled)
 	m_dcsEnabled = enabled;
 }
 
-void CIRCDDBGatewayThread::setXLX(bool enabled, bool overrideLocal, const wxString& xlxHostsFileName)
+void CIRCDDBGatewayThread::setXLX(bool enabled, const wxString xlxHostsFileName)
 {
-	m_xlxEnabled 	 = enabled;
+	m_xlxEnabled = enabled;
 	m_xlxHostsFileName = xlxHostsFileName;
-	m_xlxOverrideLocal = overrideLocal;
 }
 
 void CIRCDDBGatewayThread::setCCS(bool enabled, const wxString& host)
@@ -1108,7 +1107,7 @@ void CIRCDDBGatewayThread::loadGateways()
 
 void CIRCDDBGatewayThread::loadReflectors()
 {
-	if(m_xlxEnabled && !m_xlxOverrideLocal) {
+	if(m_xlxEnabled) {
 		loadXLXReflectors();
 	}
 	
@@ -1152,10 +1151,7 @@ void CIRCDDBGatewayThread::loadReflectors()
 #endif
 		if (fileName.IsFileReadable())
 			loadDCSReflectors(fileName.GetFullPath());
-	}
-
-	if(m_xlxEnabled && m_xlxOverrideLocal) {
-		loadXLXReflectors();
+	
 	}
 }
 
@@ -1274,10 +1270,7 @@ void CIRCDDBGatewayThread::loadXLXReflectors()
 			reflector.Truncate(LONG_CALLSIGN_LENGTH - 1U);
 			reflector.Append(wxT("G"));
 
-			//if(m_dcsEnabled && reflector.StartsWith(wxT("DCS")))
-				m_cache.updateGateway(reflector, addrText, DP_DCS, lock, true);
-			//else if(m_dextraEnabled && reflector.StartsWith(wxT("XRF")))
-			//	m_cache.updateGateway(reflector, addrText, DP_DEXTRA, lock, true);
+			m_cache.updateGateway(reflector, addrText, DP_DCS, lock, true);
 
 			count++;
 		}

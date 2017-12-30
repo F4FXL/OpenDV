@@ -109,8 +109,6 @@ private:
 	static CCallsignList*           m_blackList;
 
 	wxString             m_reflector;
-	wxString             m_xlxReflector;
-	bool                 m_isXLX;
 	wxString             m_repeater;
 	CDCSProtocolHandler* m_handler;
 	in_addr              m_yourAddress;
