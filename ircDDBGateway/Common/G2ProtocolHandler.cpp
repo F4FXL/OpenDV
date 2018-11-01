@@ -144,6 +144,18 @@ CAMBEData* CG2ProtocolHandler::readAMBE()
 	return data;
 }
 
+void CG2ProtocolHandler::PunchUDPHole(const wxString& address)
+{
+	unsigned char buffer[1];
+	buffer[0] = 0;
+	
+	in_addr addr;
+	addr.s_addr = ::inet_addr(address.mb_str());
+
+	for(int i = 0; i < 3; i++)
+		m_socket.write(buffer, 1, addr, m_port);
+}
+
 void CG2ProtocolHandler::close()
 {
 	m_socket.close();
