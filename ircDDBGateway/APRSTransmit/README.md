@@ -24,3 +24,22 @@ To run it as a background daemon, add -daemon switch e.g.:
 ```sh
 sudo aprstransmitd n1rpt__c -host rotate.aprs2.net -port 14580 -filter 'm/100' -daemon
 ```
+# Runnning as a systemd service
+To run as a systemd service you must have installed aprstransmitd through the debian packages. Once, this is done configuration works as follow. 
+Lets assume we want to send APRS data on the n1rpt__c repeater.
+Copy file /etc/opendv/aprstransmitd.conf to /etc/opendv/aprstransmid_n1rpt__c.conf
+```sh
+sudo cp /etc/opendv/aprstransmid.conf /etc/opendv/aprstransmid_n1rpt__c.conf
+```
+Edit the file /etc/opendv/aprstransmid_n1rpt__c.conf and change parameters to suite your needs.
+
+Now enable the service 
+```sh
+sudo systemctl enable aprstransmitd@n1rtpt__c
+```
+And start it
+```sh
+sudo service aprstransmitd@n1rpt__c start
+```sh
+
+You can repeat above steps if you have a second repeater running.
